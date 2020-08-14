@@ -24,7 +24,9 @@ const books = [
 
 const bookArticle = document.querySelector(".bookArticle");
 const bookList = document.querySelector(".bookList");
+const add = document.querySelector(".add");
 
+// Loop through each item
 const onjaBook = e => {
     const myHtml = books
     .map(
@@ -48,4 +50,5 @@ const onjaBook = e => {
 };
 
 
+// call the function
 onjaBook();
