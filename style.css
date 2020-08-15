@@ -40,8 +40,7 @@ main {
 form {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
 }
 
 
@@ -77,9 +76,9 @@ button {
 
 .aboutBook {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: 1fr 1fr 1fr 1fr 1.2fr;
     background-color: rgb(178, 178, 231);
-    padding-block-start: 1rem;
+    padding-block-start: 2rem;
     padding-block-end: 1rem;
 }
 
@@ -91,7 +90,7 @@ button {
 
 .book-item {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto;
     row-gap: 2rem;
 }
 
