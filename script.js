@@ -37,7 +37,7 @@ const onjaBook = e => {
                     <p>${book.author}</p>
                     <span>${book.genre}</span>
                     <span>${book.pages}</span>
-                    <input 
+                    <input ${book.status === 'read' ? 'checked' : ""}
                     value="${book.status}"
                     type="checkbox"
                     >
