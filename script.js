@@ -104,11 +104,14 @@ const displayTheNewBook = e => {
     bookList.innerHTML += myHtml;
 };
 
+
+// convert the array into string 
 const mirrorToLocalStorage = () => {
     console.log('mirrorring items to local storage');
     localStorage.setItem('newBooks', JSON.stringify(newBooks));
 };
 
+// Store the new item
 const restoreFromLocalStorage = () => {
     console.log('Restoring from Ls')
     const lstNewBook = JSON.parse(localStorage.getItem('newBooks'));
@@ -124,13 +127,15 @@ const handleDeleteBook = e => {
     if (e.target.classList.contains("delete")) {
         const deleteList = e.target;
         deleteList.closest('.book-item').remove();
+        bookList.dispatchEvent(new CustomEvent('newBookUpdate'));
     }
 }
-
 // Listen to the dispatch event
 form.addEventListener('submit', handleSubmitBtn);
 bookList.addEventListener('newBookUpdate', displayTheNewBook);
 bookList.addEventListener("newBookUpdate", mirrorToLocalStorage);
 document.addEventListener('click', handleDeleteBook);
 
+
 restoreFromLocalStorage();
+
