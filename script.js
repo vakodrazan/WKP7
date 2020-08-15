@@ -25,6 +25,7 @@ const books = [
 const bookArticle = document.querySelector(".bookArticle");
 const bookList = document.querySelector(".bookList");
 const add = document.querySelector(".add");
+const form = document.querySelector("form");
 
 // Loop through each item
 const onjaBook = e => {
@@ -49,6 +50,32 @@ const onjaBook = e => {
     bookList.innerHTML = myHtml;
 };
 
+// let item = [];
 
-// call the function
+// const handleSubmitBtn = e => {
+//     e.preventDefault();
+//     const name = event.currentTarget.item.value;
+//     if (!name) return;
+//     const item = {
+//         name,
+//         complete: false,
+//     };
+//     // push ito our state
+//     items.push(item);
+//     console.info(`There are now ${items.length} in your state`);
+//     e.target.reset();
+//     bookList.dispatchEvent(new CustomEvent('itemsUpdate'));
+// }
+
+// form.addEventListener('submit', handleSubmitBtn);
+
+const handleDeleteBook = e => {
+    if (e.target.classList.contains("delete")) {
+        const deleteList = e.target;
+        deleteList.closest('.book-item').remove();
+    }
+}
+
+document.addEventListener('click', handleDeleteBook);
+
 onjaBook();
