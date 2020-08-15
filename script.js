@@ -22,7 +22,7 @@ const books = [
     },
 ];
 
-const bookArticle = document.querySelector(".bookArticle");
+
 const bookList = document.querySelector(".bookList");
 const add = document.querySelector(".add");
 const form = document.querySelector("form");
@@ -49,26 +49,65 @@ const onjaBook = e => {
     .join('');
     bookList.innerHTML = myHtml;
 };
+onjaBook();
 
-// let item = [];
+// Create a an empty array that will contain the new item 
+let newBooks = [];
 
-// const handleSubmitBtn = e => {
-//     e.preventDefault();
-//     const name = event.currentTarget.item.value;
-//     if (!name) return;
-//     const item = {
-//         name,
-//         complete: false,
-//     };
-//     // push ito our state
-//     items.push(item);
-//     console.info(`There are now ${items.length} in your state`);
-//     e.target.reset();
-//     bookList.dispatchEvent(new CustomEvent('itemsUpdate'));
-// }
+// Create a function for the new array
+const handleSubmitBtn = e => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const name= form.bookTitle.value;
+    const author = form.bookAuthor.value;
+    const genre = form.genre.value;
+    const pages = form.bookPages.value;
+    const status = form.status.value;
+
+    const newBook = {
+        title: name,
+        author: author,
+        genre: genre,
+        pages: pages,
+        status: status,
+    }
+
+    // push the new object inside the array
+    newBooks.push(newBook);
+    e.target.reset();
+
+    // add the dispatch event for the new event
+    bookList.dispatchEvent(new CustomEvent('newBookUpdate'));
+};
+
+// Add the new array object with the existing elements
+const displayTheNewBook = e => {
+    const myHtml = newBooks
+    .map(
+        item => 
+            `
+                <li class="book-item">
+                    <span>${item.title}</span>
+                    <p>${item.author}</p>
+                    <span>${item.genre}</span>
+                    <span>${item.pages}</span>
+                    <input ${item.status === 'read' ? 'checked' : ""}
+                    value="${item.status}"
+                    type="checkbox"
+                    >
+                    <button class="delete" aria-label="Remove ${item.title}" value="${item.title}">&times;</button>
+                </li>
+            `
+    )
+    .join('');
+    bookList.innerHTML += myHtml;
+};
+
 
 // form.addEventListener('submit', handleSubmitBtn);
 
+// Delete the list item when click the delete button
 const handleDeleteBook = e => {
     if (e.target.classList.contains("delete")) {
         const deleteList = e.target;
@@ -76,6 +115,7 @@ const handleDeleteBook = e => {
     }
 }
 
+// Listen to the dispatch event
+bookList.addEventListener('newBookUpdate', displayTheNewBook);
+form.addEventListener('submit', handleSubmitBtn);
 document.addEventListener('click', handleDeleteBook);
-
-onjaBook();
