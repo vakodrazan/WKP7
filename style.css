@@ -39,7 +39,6 @@ main {
 
 form {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
 }
 
@@ -53,16 +52,10 @@ button {
     color: white;
 }
 
-.content {
-    display: flex;
-    flex-direction: row;
-}
-
 .book {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-inline-end: .5rem;
 }
 
 /* ===================================== */
