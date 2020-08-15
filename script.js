@@ -104,8 +104,20 @@ const displayTheNewBook = e => {
     bookList.innerHTML += myHtml;
 };
 
+const mirrorToLocalStorage = () => {
+    console.log('mirrorring items to local storage');
+    localStorage.setItem('newBooks', JSON.stringify(newBooks));
+};
 
-// form.addEventListener('submit', handleSubmitBtn);
+const restoreFromLocalStorage = () => {
+    console.log('Restoring from Ls')
+    const lstNewBook = JSON.parse(localStorage.getItem('newBooks'));
+    if (lstNewBook) {
+        newBooks.push(...lstNewBook);
+    };
+    bookList.dispatchEvent(new CustomEvent('newBookUpdate'));
+};
+
 
 // Delete the list item when click the delete button
 const handleDeleteBook = e => {
@@ -116,6 +128,9 @@ const handleDeleteBook = e => {
 }
 
 // Listen to the dispatch event
-bookList.addEventListener('newBookUpdate', displayTheNewBook);
 form.addEventListener('submit', handleSubmitBtn);
+bookList.addEventListener('newBookUpdate', displayTheNewBook);
+bookList.addEventListener("newBookUpdate", mirrorToLocalStorage);
 document.addEventListener('click', handleDeleteBook);
+
+restoreFromLocalStorage();
