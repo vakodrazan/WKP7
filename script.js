@@ -134,7 +134,7 @@ const handleDeleteBook = e => {
 form.addEventListener('submit', handleSubmitBtn);
 bookList.addEventListener('newBookUpdate', displayTheNewBook);
 bookList.addEventListener("newBookUpdate", mirrorToLocalStorage);
-document.addEventListener('click', handleDeleteBook);
+bookList.addEventListener('click', handleDeleteBook);
 
 
 restoreFromLocalStorage();
