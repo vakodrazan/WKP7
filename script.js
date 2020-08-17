@@ -5,6 +5,7 @@ const books = [
         genre: "Mystery",
         pages: 305,
         status: 'read',
+        id: 002271313746162,
     },
     {
         title: "The boy in the striped pyjamas",
@@ -12,6 +13,7 @@ const books = [
         genre: "Historical",
         pages: 216,
         status: 'read',
+        id: 002271313746164,
     },
     {
         title: "Little woman",
@@ -19,6 +21,7 @@ const books = [
         genre: "Comedy",
         pages: 759,
         status: 'Not read',
+        id: 00227131374616362,
     },
 ];
 
@@ -39,10 +42,10 @@ const onjaBook = e => {
                     <span>${book.genre}</span>
                     <span>${book.pages}</span>
                     <input ${book.status === 'read' ? 'checked' : ""}
-                    value="${book.status}"
+                    value="${book.id}"
                     type="checkbox"
                     >
-                    <button class="delete" aria-label="Remove ${book.title}" value="${book.title}">&times;</button>
+                    <button class="delete" aria-label="Remove ${book.title}" value="${book.id}">&times;</button>
                 </li>
             `
     )
@@ -71,6 +74,7 @@ const handleSubmitBtn = e => {
         genre: genre,
         pages: pages,
         status: status,
+        id: Date.now(),
     }
 
     // push the new object inside the array
@@ -93,10 +97,10 @@ const displayTheNewBook = e => {
                     <span>${item.genre}</span>
                     <span>${item.pages}</span>
                     <input ${item.status === 'read' ? 'checked' : ""}
-                    value="${item.status}"
+                    value="${item.id}"
                     type="checkbox"
                     >
-                    <button class="delete" aria-label="Remove ${item.title}" value="${item.title}">&times;</button>
+                    <button class="delete" aria-label="Remove ${item.title}" value="${item.id}">&times;</button>
                 </li>
             `
     )
@@ -130,11 +134,35 @@ const handleDeleteBook = e => {
         bookList.dispatchEvent(new CustomEvent('newBookUpdate'));
     }
 }
+
+const deleteItem = id => {
+    console.log("deleting item", id);
+    newBooks = newBooks.filter(newBook => newBook.id !== id);
+    bookList.dispatchEvent(new CustomEvent('newBookUpdate'));
+}
+
+const markAsComplete = id => {
+    console.log(id);
+    const newBookRef = newBooks.find(item => item.id === id);
+    newBookRef.status = !newBookRef.status;
+    bookList.dispatchEvent(new CustomEvent('newBookUpdate'));
+}
+
 // Listen to the dispatch event
 form.addEventListener('submit', handleSubmitBtn);
 bookList.addEventListener('newBookUpdate', displayTheNewBook);
 bookList.addEventListener("newBookUpdate", mirrorToLocalStorage);
 bookList.addEventListener('click', handleDeleteBook);
+
+bookList.addEventListener('click', function(e) {
+    const id = parseInt(e.target.value)
+    if (e.target.matches('button')) {
+        deleteItem(parseInt(id));
+    }
+    if (e.target.matches('input[type="checkbox"]')) {
+        markAsComplete(id);
+    }
+})
 
 
 restoreFromLocalStorage();
